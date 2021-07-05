@@ -1,8 +1,15 @@
 const path = require('path');
 require('dotenv').config({ path: path.join(__dirname, '.env') });
 const fastify = require('fastify')({ logger: true });
+const fastifyStatic = require('fastify-static');
 const mysql = require('mysql2/promise');
 const questions = require('./sql.js');
+
+fastify.register(require('fastify-static'), {
+  root: path.join(__dirname, 'assets'),
+  prefix: '/assets/', // optional: default '/'
+})
+
 
 //Create a connection creation promise
 const connection = mysql.createConnection({
