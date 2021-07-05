@@ -1,0 +1,133 @@
+<!<!DOCTYPE html>
+<html>
+    <head>
+        <title>COVID Overview</title>
+        <script src='https://cdn.jsdelivr.net/npm/chart.js@3.4.1/dist/chart.min.js'></script>
+        <style>
+        @import url('https://fonts.googleapis.com/css2?family=Syne:wght@800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant:wght@600&display=swap');
+
+        h1 {
+            font-family: 'Syne', sans-serif;
+        }
+
+        h2 {
+            margin: 20px;
+            font-family: 'Cormorant', serif;
+        }
+
+        header {
+            width: calc(100vw-20px);
+            padding: 10px;
+            text-align: center;
+        }
+
+        main {
+            display: grid;
+            text-align: center;
+            grid-template-columns: 1fr 600px 1fr;
+        }
+
+        h2, canvas {
+            grid-column: 2/3;
+            max-width: 600px;
+            max-height: 400px;
+        }
+        </style>
+    </head>
+    <body>
+        <header>
+            <h1>Covid Overview</h1>
+        </header>
+        <main>
+            <h2>Popularity of Vaccines</h2>
+            <canvas id="popularityOfVaccines" width="600" height="400"></canvas>
+
+            <h2>Pfizer vs Oxford Vaccine</h2>
+            <canvas id="pfizerVsOxford" width="600" height="400"></canvas>
+
+            <h2>Rich vs Poor countries</h2>
+            <canvas id="richVsPoor" width="600" height="400"></canvas>
+        </main>
+        <script>
+        function getRandomColor() {
+            var letters = '0123456789ABCDEF';
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        };
+        //Popularity Of Vaccines
+        var ctx1 = document.getElementById('popularityOfVaccines').getContext('2d');
+        var myChart1 = new Chart(ctx1, {
+            type: 'bar',
+            data: {
+                labels: `<%= data1.labels %>`.split(','),
+                datasets: [{
+                    label: '# of countries using the vaccine',
+                    data: `<%= data1.data %>`.split(','),
+                    backgroundColor: `<%= data1.labels %>`.split(',').map(t=>getRandomColor()),
+                    borderColor: `<%= data1.labels %>`.split(',').map(t=>getRandomColor()),
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+
+        //Pfizer vs Oxford
+        var ctx2 = document.getElementById('pfizerVsOxford').getContext('2d');
+        var myChart2 = new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: `<%= data2.labels %>`.split(','),
+                datasets: [{
+                    label: 'Pfizer vs Oxford Vaccine (Total deaths per million in countries using them)',
+                    data: `<%= data2.data %>`.split(','),
+                    backgroundColor: `<%= data2.labels %>`.split(',').map(t=>getRandomColor()),
+                    borderColor: `<%= data2.labels %>`.split(',').map(t=>getRandomColor()),
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        //Rich Vs Poor Countries
+        var ctx3 = document.getElementById('richVsPoor').getContext('2d');
+        var myChart3 = new Chart(ctx3, {
+            type: 'bar',
+            data: {
+                labels: `<%= data3.labels %>`.split(','),
+                datasets: [{
+                    label: 'Rich vs Poor countries (Total deaths per million)',
+                    data: `<%= data3.data %>`.split(','),
+                    backgroundColor: `<%= data3.labels %>`.split(',').map(t=>getRandomColor()),
+                    borderColor: `<%= data3.labels %>`.split(',').map(t=>getRandomColor()),
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+        
+        </script>
+    </body>
+</html>
