@@ -48,6 +48,12 @@
 
             <h2>Rich vs Poor countries</h2>
             <canvas id="richVsPoor" width="600" height="400"></canvas>
+
+            <h2>New Deaths - Countries with vaccination more than 50% vs less than 10%</h2>
+            <canvas id="fiftyVsTen" width="600" height="400"></canvas>
+
+            <h2>Continent wise vaccination rates</h2>
+            <canvas id="continentWiseVaccinations" width="600" height="400"></canvas>
         </main>
         <script>
         function getRandomColor() {
@@ -127,7 +133,54 @@
                 }
             }
         });
+
+        //Fifty percent vaccinations Vs 10% vaccinations [NDPM]
         
+        var ctx4 = document.getElementById('fiftyVsTen').getContext('2d');
+        var myChart4 = new Chart(ctx4, {
+            type: 'bar',
+            data: {
+                labels: `<%= data4.labels %>`.split(','),
+                datasets: [{
+                    label: 'Countries with vaccination more than 50% vs the ones with less than 10% (New deaths per million)',
+                    data: `<%= data4.data %>`.split(','),
+                    backgroundColor: `<%= data4.labels %>`.split(',').map(t=>getRandomColor()),
+                    borderColor: `<%= data4.labels %>`.split(',').map(t=>getRandomColor()),
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Continent wise vaccination rates
+
+        var ctx5 = document.getElementById('continentWiseVaccinations').getContext('2d');
+        var myChart5 = new Chart(ctx5, {
+            type: 'bar',
+            data: {
+                labels: `<%= data5.labels %>`.split(','),
+                datasets: [{
+                    label: 'Continent wise vaccination rates',
+                    data: `<%= data5.data %>`.split(','),
+                    backgroundColor: `<%= data5.labels %>`.split(',').map(t=>getRandomColor()),
+                    borderColor: `<%= data5.labels %>`.split(',').map(t=>getRandomColor()),
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
         </script>
     </body>
 </html>

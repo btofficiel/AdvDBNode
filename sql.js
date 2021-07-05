@@ -35,6 +35,25 @@ const questions = {
         SELECT AVG(total_deaths_per_million) FROM covidByLocation
         WHERE gdp_per_capita <= 10000
     ) AS "Poor countries"
+  `,
+  q4: `
+    SELECT 
+    (
+        SELECT AVG(new_deaths_per_million) FROM covidByLocation
+        WHERE people_fully_vaccinated_per_hundred >=50
+    ) AS "More than 50 percent",
+    (
+        SELECT AVG(new_deaths_per_million) FROM covidByLocation
+        WHERE people_fully_vaccinated_per_hundred <=10
+    ) AS "Less than 10 percent"
+  `,
+  q5: `
+    SELECT DISTINCT B.continentId, C.continent, AVG(people_fully_vaccinated_per_hundred) AS vaccination_percentage FROM locations AS B
+    JOIN covidByLocation AS A
+    ON A.locationId = B.id
+    JOIN continents AS C
+    ON B.continentId=C.id
+    GROUP BY B.continentId
   `
 };
 
